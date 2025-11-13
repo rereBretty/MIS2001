@@ -31,10 +31,15 @@ jobs:
       run: |
         python clean_and_merge.py
 
-    - name: Commit and push database changes
+    - name: Upload database artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: processed-database
+        path: merged_data.db
+
+    - name: Show completion message
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add merged_data.db
-        git diff --staged --quiet || git commit -m "chore: update database from data processing pipeline"
-        git push
+        echo "✅ Data processing completed successfully!"
+        echo "📊 Database file has been generated/updated"
+        echo "📁 File: merged_data.db"
+        echo "🔗 Artifact available for download in Actions tab"
